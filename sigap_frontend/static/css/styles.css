@@ -1,0 +1,505 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&family=Raleway:wght@600;700;800&display=swap');
+
+:root {
+    --azul-oscuro: #1a3a6e;
+    --azul-medio: #2a5298;
+    --azul-claro: #4a90d9;
+    --azul-sidebar: #1e4db7;
+    --gris-fondo: #eef1f7;
+    --blanco: #ffffff;
+    --texto: #2d3142;
+    --texto-suave: #6b7280;
+    --borde: #dde3f0;
+    --sidebar-w: 220px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--gris-fondo);
+    color: var(--texto);
+}
+
+/* ===== LOGIN ===== */
+body.login-page {
+    background: var(--gris-fondo);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-topbar {
+    background: var(--azul-oscuro);
+    padding: 14px 30px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.login-topbar .logo-icon { font-size: 2rem; }
+.login-topbar .logo-title {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 800;
+    color: white;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    display: block;
+}
+.login-topbar .logo-sub {
+    color: rgba(255,255,255,0.7);
+    font-size: 0.72rem;
+    display: block;
+}
+
+.login-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.login-card {
+    background: linear-gradient(180deg, #1a3a6e 0%, #1e4db7 60%, #2a5298 100%);
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 16px;
+    padding: 40px 44px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 3px 0 15px rgba(0,0,0,0.2);
+}
+
+.login-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.login-logo-icon { font-size: 2.4rem; }
+.login-logo-title {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 800;
+    color: white;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+}
+.login-logo-sub {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.3;
+}
+
+.login-card label {
+    font-weight: 600;
+    font-size: 0.92rem;
+    margin-bottom: 6px;
+    display: block;
+    color: white;
+}
+
+.login-input {
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'Nunito', sans-serif;
+    width: 100%;
+    transition: border-color 0.2s;
+}
+.login-input:focus {
+    outline: none;
+    border-color: var(--azul-claro);
+    box-shadow: 0 0 0 3px rgba(74,144,217,0.15);
+}
+
+.forgot-link { color: var(--azul-claro); font-size: 0.85rem; text-decoration: none; }
+.forgot-link:hover { text-decoration: underline; }
+
+.btn-login {
+    background: var(--azul-medio);
+    color: white !important;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-login:hover { background: var(--azul-oscuro); }
+
+/* ===== APP LAYOUT ===== */
+.app-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+    width: var(--sidebar-w);
+    background: linear-gradient(180deg, #1a3a6e 0%, #1e4db7 60%, #2a5298 100%);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    z-index: 100;
+    box-shadow: 3px 0 15px rgba(0,0,0,0.2);
+}
+
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 18px 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-logo .logo-icon { font-size: 2rem; }
+.sidebar-logo .logo-title {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 800;
+    color: white;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    display: block;
+}
+.sidebar-logo .logo-sub {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.65rem;
+    display: block;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 12px 0;
+    overflow-y: auto;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 20px;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+}
+
+.nav-item:hover {
+    background: rgba(255,255,255,0.1);
+    color: white;
+}
+
+.nav-item.active {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border-left-color: #7eb8f7;
+}
+
+.nav-item i { width: 20px; text-align: center; font-size: 1rem; }
+
+.sidebar-footer {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding: 8px 0;
+}
+
+/* ===== MAIN CONTENT ===== */
+.main-content {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ===== TOPBAR ===== */
+.topbar {
+    background: white;
+    border-bottom: 1px solid var(--borde);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+}
+
+.topbar-search {
+    display: flex;
+    align-items: center;
+    background: var(--gris-fondo);
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    padding: 8px 14px;
+    gap: 10px;
+    flex: 1;
+    max-width: 380px;
+}
+
+.topbar-search i { color: var(--texto-suave); }
+.topbar-search input {
+    border: none;
+    background: transparent;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    width: 100%;
+    outline: none;
+    color: var(--texto);
+}
+
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.topbar-btn {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--gris-fondo);
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--texto);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.topbar-btn:hover { background: #dde3f0; }
+.topbar-btn.icon-only { padding: 8px 12px; }
+
+.topbar-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 8px;
+}
+
+.user-avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--azul-medio);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1rem;
+}
+
+.user-name { font-weight: 700; font-size: 0.85rem; display: block; }
+.user-role { font-size: 0.75rem; color: var(--texto-suave); display: block; }
+
+/* ===== PAGE BODY ===== */
+.page-body { flex: 1; overflow-y: auto; }
+
+/* ===== HISTORIAL LAYOUT ===== */
+.historial-layout {
+    display: flex;
+    gap: 0;
+    height: calc(100vh - 61px);
+}
+
+.patient-panel {
+    width: 240px;
+    min-width: 240px;
+    background: white;
+    border-right: 1px solid var(--borde);
+    padding: 20px 16px;
+    overflow-y: auto;
+}
+
+.patient-avatar-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 14px;
+}
+
+.patient-avatar {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: var(--gris-fondo);
+    border: 2px solid var(--borde);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: var(--azul-claro);
+}
+
+.patient-info h5 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--texto);
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.patient-info p {
+    font-size: 0.8rem;
+    color: var(--texto-suave);
+    margin-bottom: 4px;
+}
+
+.patient-info strong { color: var(--texto); }
+
+.badge-estado {
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.info-label {
+    font-size: 0.75rem;
+    color: var(--texto-suave);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 10px !important;
+    margin-bottom: 2px !important;
+}
+
+.info-value {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--texto);
+    margin-bottom: 6px !important;
+}
+
+.historial-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.historial-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--borde);
+    background: white;
+    padding: 0 20px;
+}
+
+.htab {
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 14px 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--texto-suave);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.htab:hover { color: var(--azul-medio); }
+.htab.active {
+    color: var(--azul-medio);
+    border-bottom-color: var(--azul-medio);
+}
+
+.historial-entries {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.entry-card {
+    background: white;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    padding: 14px 16px;
+}
+
+.entry-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+
+.entry-author {
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--texto);
+}
+
+.entry-role {
+    font-size: 0.8rem;
+    color: var(--azul-claro);
+    font-weight: 600;
+}
+
+.entry-date {
+    font-size: 0.78rem;
+    color: var(--texto-suave);
+    margin-left: auto;
+}
+
+.entry-menu {
+    color: var(--texto-suave);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.entry-body p {
+    font-size: 0.85rem;
+    color: var(--texto);
+    margin-bottom: 3px;
+    line-height: 1.5;
+}
+
+.entry-file {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gris-fondo);
+    border: 1px solid var(--borde);
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-top: 8px;
+    cursor: pointer;
+    color: var(--texto);
+}
+
+.entry-file:hover { background: #dde3f0; }
+
+.new-entry {
+    background: var(--gris-fondo);
+    border-style: dashed;
+}
+
+.new-entry textarea {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.88rem;
+    color: var(--texto-suave);
+    resize: none;
+    min-height: 70px;
+    outline: none;
+}

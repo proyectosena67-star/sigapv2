@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.I.G.A.P.</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&family=Raleway:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='imagen_icono.ico') }}" type="image/x-icon">
+</head>
+<body>
+
+<div class="app-wrapper">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-icon">
+                <img src="{{ url_for('static', filename='imagen_icono.ico') }}" alt="Logo SIGAP" style="width: 100px; height: 100px;">
+            </div>
+            <div class="logo-text">
+               
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="/pacientes" class="nav-item {% if request.path == '/pacientes' %}active{% endif %}">
+                <i class="fas fa-user-injured"></i>
+                <span>Pacientes</span>
+            </a>
+            <a href="/historial" class="nav-item {% if request.path == '/historial' %}active{% endif %}">
+                <i class="fas fa-notes-medical"></i>
+                <span>Historial Clínico</span>
+            </a>
+            <a href="/evaluaciones" class="nav-item {% if request.path == '/evaluaciones' %}active{% endif %}">
+                <i class="fas fa-clipboard-check"></i>
+                <span>Evaluaciones</span>
+            </a>
+            <a href="/internamientos" class="nav-item {% if request.path == '/internamientos' %}active{% endif %}">
+                <i class="fas fa-hospital"></i>
+                <span>Internamientos</span>
+            </a>
+            <a href="/medicamentos" class="nav-item {% if request.path == '/medicamentos' %}active{% endif %}">
+                <i class="fas fa-pills"></i>
+                <span>Medicamentos</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-eye"></i>
+                <span>Visitas</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-id-badge"></i>
+                <span>Permisos</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span>Usuarios</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-search"></i>
+                <span>Auditoría</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="#" class="nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Configuración</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+
+        <!-- TOP BAR -->
+        <header class="topbar">
+            <div class="topbar-search">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Buscar paciente...">
+            </div>
+            <div class="topbar-actions">
+                <button class="topbar-btn">
+                    <i class="fas fa-bell"></i>
+                    <span>Alertas</span>
+                </button>
+                <button class="topbar-btn">
+                    <i class="fas fa-calendar"></i>
+                    <span>Visitas</span>
+                </button>
+                <button class="topbar-btn icon-only">
+                    <i class="fas fa-envelope"></i>
+                </button>
+                <div class="topbar-user">
+                    <div class="user-avatar">M</div>
+                    <div class="user-info">
+                        <span class="user-name">Dr. Carlos Mendez</span>
+                        <span class="user-role">Psiquiatra</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- PAGE CONTENT -->
+        <div class="page-body">
+            {% block contenido %}
+            {% endblock %}
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

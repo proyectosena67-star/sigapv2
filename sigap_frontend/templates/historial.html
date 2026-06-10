@@ -1,0 +1,135 @@
+{% extends 'layout.html' %}
+
+{% block contenido %}
+<div class="historial-layout">
+
+    <!-- PANEL IZQUIERDO: Info del paciente -->
+    <div class="patient-panel">
+        <div class="patient-avatar-wrap">
+            <div class="patient-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+        <div class="patient-info">
+            <h5>Laura Martinez Gonzalez</h5>
+            <p><strong>Id Paciente:</strong> p_2039</p>
+            <p><strong>Edad:</strong> 39</p>
+            <p><strong>Genero:</strong> femenino</p>
+            <p><strong>Estado:</strong> <span class="badge-estado">Hospitalizado</span></p>
+            <p><strong>Ingreso:</strong> 14/05/2020</p>
+        </div>
+        <hr>
+        <div class="patient-info">
+            <p class="info-label">Diagnóstico principal</p>
+            <p class="info-value">Trastorno Bipolar</p>
+
+            <p class="info-label">Médico tratante</p>
+            <p class="info-value">Dr Carlos Mendez<br><small>psiquiatra</small></p>
+
+            <p class="info-label">Contacto de emergencia</p>
+            <p class="info-value">Maria Martinez (madre)<br>3142324525</p>
+        </div>
+    </div>
+
+    <!-- PANEL DERECHO: Historial -->
+    <div class="historial-panel">
+
+        <!-- Tabs -->
+        <div class="historial-tabs">
+            <button class="htab active">Evaluación clínica</button>
+            <button class="htab">Medicamentos</button>
+            <button class="htab">Archivo</button>
+        </div>
+
+        <!-- Entradas del historial -->
+        <div class="historial-entries">
+
+            <div class="entry-card">
+                <div class="entry-header">
+                    <span class="entry-author">Dr.carlos mendez</span>
+                    <span class="entry-role">Psiquiatra</span>
+                    <span class="entry-date">14/11/2020 &nbsp; 09:30</span>
+                    <span class="entry-menu">···</span>
+                </div>
+                <div class="entry-body">
+                    <p>Paciente presenta mejoría en el estado de ánimo, mayor estabilidad emocional.</p>
+                    <p>Se recomienda continuar con el tratamiento actual y seguimiento.</p>
+                    <div class="entry-file">
+                        <i class="fas fa-file-pdf text-danger"></i>
+                        <span>informe_14_11_2020</span>
+                        <i class="fas fa-download ms-2"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="entry-card">
+                <div class="entry-header">
+                    <span class="entry-author">Enfermería</span>
+                    <span class="entry-role">Laura Londoño</span>
+                    <span class="entry-date">14/11/2020 &nbsp; 09:30</span>
+                    <span class="entry-menu">···</span>
+                </div>
+                <div class="entry-body">
+                    <p>Paciente recibió medicación según indicación.</p>
+                    <p>Sin novedades. Signos vitales estables.</p>
+                </div>
+            </div>
+
+            <div class="entry-card">
+                <div class="entry-header">
+                    <span class="entry-author">Dr.carlos mendez</span>
+                    <span class="entry-role">Psiquiatra</span>
+                    <span class="entry-date">14/11/2020</span>
+                    <span class="entry-menu">···</span>
+                </div>
+                <div class="entry-body">
+                    <p>Se ajusta dosis de Quetiapina a 50mg cada 8h.</p>
+                    <p>Se solicita control en 48h.</p>
+                </div>
+            </div>
+
+            <div class="entry-card">
+                <div class="entry-header">
+                    <span class="entry-author">Dr. samanta torres</span>
+                    <span class="entry-role">psicología</span>
+                    <span class="entry-date"></span>
+                    <span class="entry-menu">···</span>
+                </div>
+                <div class="entry-body">
+                    <p>Paciente participa activamente en la sesión.</p>
+                    <p>Se observa mejor disposición al diálogo y actividades terapéuticas.</p>
+                </div>
+            </div>
+
+            <div class="entry-card">
+                <div class="entry-header">
+                    <span class="entry-author">Marta Avella</span>
+                    <span class="entry-role">Trabajo social</span>
+                    <span class="entry-date"></span>
+                    <span class="entry-menu">···</span>
+                </div>
+                <div class="entry-body">
+                    <p>Paciente participa activamente en la sesión.</p>
+                    <p>Se observa mejor disposición al diálogo y actividades terapéuticas.</p>
+                </div>
+            </div>
+
+            <!-- Área de nueva nota -->
+            <div class="entry-card new-entry">
+                <textarea placeholder="Escribe una nueva nota clínica..."></textarea>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+    document.querySelectorAll('.htab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.htab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+        });
+    });
+</script>
+{% endblock %}
