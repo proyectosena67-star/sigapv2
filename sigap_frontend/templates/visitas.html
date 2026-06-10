@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% block contenido %}
+<div class="visits-container">
+    
+    <div class="visits-header">
+        <div class="visits-title-area">
+            <h2>
+                <i class="fas fa-users icon-purple"></i> Control de Visitas e Ingresos
+            </h2>
+            <p>Registro de familiares autorizados, control de horarios y bitácora de asistencia activa.</p>
+        </div>
+        <button class="btn-visits-primary">
+            <i class="fas fa-user-plus"></i> Registrar Nueva Visita
+        </button>
+    </div>
+
+    <div class="visits-stats-grid">
+        <div class="vstat-card card-active-visits">
+            <div class="vstat-info">
+                <h3>Visitas en Planta</h3>
+                <div class="vstat-number">5</div>
+            </div>
+            <i class="fas fa-door-open vstat-bg-icon"></i>
+        </div>
+        <div class="vstat-card card-total-today">
+            <div class="vstat-info">
+                <h3>Total de Visitas Hoy</h3>
+                <div class="vstat-number">18</div>
+            </div>
+            <i class="fas fa-history vstat-bg-icon"></i>
+        </div>
+    </div>
+    
+    </div>
+{% endblock %}

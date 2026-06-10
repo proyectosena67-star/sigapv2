@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block contenido %}
+<div class="perm-container">
+    
+    <div class="perm-header">
+        <div class="perm-title-area">
+            <h2>
+                <i class="fas fa-shield-alt icon-indigo"></i> Matriz de Permisos y Roles
+            </h2>
+            <p>Configuración de niveles de acceso, restricciones de seguridad y privilegios del sistema.</p>
+        </div>
+        <button class="btn-perm-primary">
+            <i class="fas fa-user-shield"></i> Guardar Cambios
+        </button>
+    </div>
+
+    <div class="perm-alert-banner">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span><strong>Atención:</strong> Los cambios en esta sección modifican el acceso inmediato del personal a las historias clínicas y datos sensibles de los pacientes.</span>
+    </div>
+    
+    </div>
+{% endblock %}

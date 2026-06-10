@@ -6,7 +6,6 @@ def crear_base_de_datos():
     # Nos aseguramos de crearla en la misma carpeta que este script
     db_path = os.path.join(os.path.dirname(__file__), 'sigap.db')
     
-    # ⚠️ ELIMINAR BASE DE DATOS ANTERIOR SI EXISTE PARA EVITAR CONFLICTOS DE ESTRUCTURA
     if os.path.exists(db_path):
         os.remove(db_path)
         
@@ -211,20 +210,20 @@ def crear_base_de_datos():
         
     # Insertar Usuarios Institucionales Reales
     usuarios = [
-        ('Laura Londoño', '23456789', 'llondoño@sigap.com', 'admin123', 1),
-        ('Carlos Martínez', '12345678', 'cmartinez@sigap.com', 'dr12234', 2),
-        ('Juan Arboleda', '34567890', 'jarboleda@sigap.com', 'medico123', 3),
-        ('Ana Santos', '45678901', 'asantos@sigap.com', 'nutri123', 4)
+        ('Laura Londoño', '23456789', 'llondono@sigap.com', 'admin123', 1, 1),
+        ('Carlos Martínez', '12345678', 'cmartinez@sigap.com', 'dr12234', 2, 1),
+        ('Juan Arboleda', '34567890', 'jarboleda@sigap.com', 'medico123', 3, 1),
+        ('Ana Santos', '45678901', 'asantos@sigap.com', 'nutri123', 4, 1),
+        ('Pedro Pérez', '123456789', 'pperez@sigap.com', 'med123', 3, 0)
     ]
 
-    for nombre, doc, correo, password, rol_id in usuarios:
+    for nombre, doc, correo, password, rol_id, activo in usuarios:
         cursor.execute('''
         INSERT OR IGNORE INTO USUARIOS (nombre, documento, correo, password, id_rol, activo)
-        VALUES (?, ?, ?, ?, ?, 1)
-        ''', (nombre, doc, correo, password, rol_id))
+        VALUES (?, ?, ?, ?, ?, ?)
+        ''', (nombre, doc, correo, password, rol_id, activo))
 
-    # CORRECCIÓN DE LA LISTA DE PACIENTES: Mapeada exactamente a tus campos reales
-    # (nombre, documento, codigo_unico, genero, estado, id_usuario)
+    #  INSERCION DE PACIENTES PRUEBA
     pacientes = [
         ('Laura Martínez González', '1020456789', 'P-102045', 'Femenino', 'Hospitalizado', 2),
         ('Andrés Felipe Córdoba', '1032456112', 'P-103245', 'Masculino', 'Alta Médica', 2),
@@ -264,9 +263,66 @@ def crear_base_de_datos():
     VALUES (?, ?, ?, ?, ?, ?)
     """, pacientes)
     
+    # INSERCIÓN DE HISTORIALES Y DIAGNÓSTICOS 
+    print("Generando historiales clínicos y diagnósticos...")
+    
+    diagnosticos_lista = [
+        'Trastorno Bipolar I', 'Depresión Mayor', 'Esquizofrenia Paranoide', 'Trastorno Esquizoafectivo',
+        'Trastorno de Ansiedad Generalizada', 'Trastorno Límite de la Personalidad', 'Anorexia Nerviosa Purgativa',
+        'Trastorno por Consumo de Alcohol', 'Depresión Mayor con Síntomas Psicóticos', 'Trastorno de Estrés Postraumático',
+        'Demencia Tipo Alzheimer con Agitación', 'Trastorno Delirante Crónico', 'Trastorno de Conducta Alimentaria',
+        'Trastorno Obsesivo-Compulsivo (TOC)', 'Episodio Depresivo Leve', 'Trastorno del Espectro Autista con Crisis de Agresividad',
+        'Trastorno Bipolar II (Episodio Mixto)', 'Ansiedad Inducida por Sustancias', 'Ciclotimia Avanzada',
+        'Trastorno de Personalidad Antisocial', 'Ataques de Pánico con Agorafobia', 'Psicosis No Especificada',
+        'Trastorno Afectivo Orgánico', 'Insomnio Crónico Severo', 'Trastorno de Despersonalización',
+        'Trastorno Somatomorfo', 'Trastorno por Estrés Agudo', 'Parafrenia Tardía', 'Trastorno de Adaptación Depresivo',
+        'Deterioro Cognitivo Mayor con Psicosis'
+    ]
+
+    cursor.execute("SELECT id_paciente FROM PACIENTES ORDER BY id_paciente ASC")
+    pacientes_insertados = cursor.fetchall()
+
+    for i, (id_pac,) in enumerate(pacientes_insertados):
+        cursor.execute("""
+            INSERT INTO HISTORIAL_CLINICO (fecha, id_paciente) 
+            VALUES ('2026-06-10', ?)
+        """, (id_pac,))
+        
+        id_historial = cursor.lastrowid 
+        
+
+        cursor.execute("""
+            INSERT INTO DIAGNOSTICOS (descripcion, fecha, id_historial) 
+            VALUES (?, '2026-06-10', ?)
+        """, (diagnosticos_lista[i], id_historial))
+    
+    # --- INSERCIÓN DE MEDICAMENTOS E INVENTARIO SEMILLA ---
+    print("Insertando inventario de medicamentos base...")
+    
+    medicamentos_iniciales = [
+        ("Clonazepam 2mg", 50),
+        ("Fluoxetina 20mg", 120),
+        ("Sertralina 50mg", 85),
+        ("Alprazolam 0.5mg", 8),
+        ("Risperidona 2mg", 40),
+        ("Quetiapina 100mg", 65),
+        ("Lorazepam 2mg", 5),
+        ("Haloperidol 5mg", 30),
+        ("Paracetamol 500mg", 200)
+    ]
+
+    for nombre, cantidad in medicamentos_iniciales:
+        # Se inserta el medicamento
+        cursor.execute("INSERT INTO MEDICAMENTOS (nombre) VALUES (?)", (nombre,))
+        id_med = cursor.lastrowid
+        
+        # Se asocia y se inserta su cantidad correspondiente en la tabla INVENTARIO
+        cursor.execute("INSERT INTO INVENTARIO (id_medicamento, cantidad) VALUES (?, ?)", (id_med, cantidad))
+        
+
     conn.commit()
     conn.close()
-    print("¡Felicidades! Toda la estructura y datos de prueba han sido creados con éxito en 'sigap.db'.")
+    print(" Toda la estructura y datos de prueba han sido creados con éxito en 'sigap.db'.")
 
 if __name__ == '__main__':
     crear_base_de_datos()

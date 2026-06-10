@@ -1,74 +1,86 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S.I.G.A.P. - Medicamentos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-</head>
-<body>
+{% extends 'layout.html' %}
 
-<div class="d-flex">
-    <div class="bg-dark text-white p-3" style="width: 250px; min-height: 100vh;">
-        <h4 class="text-center text-primary mb-4">S.I.G.A.P.</h4>
-        <p class="text-muted small px-2">Rol: <span class="badge bg-secondary text-uppercase">{{ session['rol'] }}</span></p>
-        <hr>
-        <ul class="nav nav-pills flex-column mb-auto">
-            {% if session['rol'] in ['psiquiatra', 'medico', 'nutricionista'] %}
-            <li><a href="/pacientes" class="nav-link text-white">👤 Pacientes</a></li>
-            {% endif %}
-
-            {% if session['rol'] in ['administrador', 'psiquiatra', 'medico'] %}
-            <li><a href="/medicamentos" class="nav-link active">💊 Medicamentos</a></li>
-            {% endif %}
-
-            <li><a href="/historial" class="nav-link text-white">📂 Historial Clínico</a></li>
-        </ul>
-        <hr>
-        <a href="/logout" class="btn btn-danger btn-sm w-100">Cerrar Sesión</a>
+{% block contenido %}
+<div class="meds-container">
+    
+    <div class="meds-header">
+        <h2>
+            <i class="fas fa-pills icon-green"></i> Farmacia e Inventario de Medicamentos
+        </h2>
+        <p>Control de stock físico de psicofármacos y registro de despachos para pacientes.</p>
     </div>
 
-    <div class="flex-grow-1 p-4 bg-light">
-        <div class="card shadow-sm">
-            <div class="card-header bg-success text-white">
-                <h5 class="mb-0">📦 Inventario y Control de Medicamentos</h5>
-            </div>
-            <div class="card-body">
-                <p class="text-muted">Módulo de control de existencias en farmacia interna.</p>
-                
-                <table class="table table-striped align-middle">
-                    <thead class="table-dark">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="flash-alert-success">
+              <i class="fas fa-check-circle"></i> {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <div class="meds-grid">
+        
+        <div class="meds-card">
+            <h3>
+                <i class="fas fa-plus-circle icon-muted"></i> Ingreso de Stock
+            </h3>
+            <form method="POST" action="{{ url_for('medicamentos') }}" class="meds-form">
+                <div class="form-group">
+                    <label>Nombre del Medicamento</label>
+                    <input type="text" name="nombre_medicamento" placeholder="Ej: Clonazepam 2mg" required class="meds-input">
+                </div>
+
+                <div class="form-group">
+                    <label>Cantidad a añadir</label>
+                    <input type="number" name="cantidad" min="1" placeholder="Cantidad en unidades" required class="meds-input">
+                </div>
+
+                <button type="submit" class="btn-meds-submit">
+                    <i class="fas fa-save"></i> Guardar en Inventario
+                </button>
+            </form>
+        </div>
+
+        <div class="meds-card">
+            <h3>
+                <i class="fas fa-boxes icon-muted"></i> Existencias Actuales
+            </h3>
+            
+            <div class="meds-table-scroll">
+                <table class="meds-table">
+                    <thead>
                         <tr>
-                            <th>Nombre del Medicamento</th>
-                            <th>Stock / Cantidad</th>
-                            <th>Estado</th>
+                            <th>Fármaco / Sustancia</th>
+                            <th class="text-right">Disponibilidad</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for med in medicamentos %}
                         <tr>
-                            <td><strong>{{ med.nombre }}</strong></td>
-                            <td>{{ med.cantidad }} unidades</td>
-                            <td>
-                                {% if med.cantidad > 5 %}
-                                <span class="badge bg-success">Disponible</span>
-                                {% else %}
-                                <span class="badge bg-danger">Stock Bajo</span>
-                                {% endif %}
+                            <td class="med-name">{{ med.nombre }}</td>
+                            <td class="text-right">
+                                <span class="badge-stock {% if med.cantidad > 10 %}stock-high{% else %}stock-low{% endif %}">
+                                    {{ med.cantidad }} uds
+                                </span>
                             </td>
                         </tr>
-                        {% else %}
-                        <tr>
-                            <td colspan="3" class="text-center text-muted">No hay medicamentos registrados en el inventario.</td>
-                        </tr>
                         {% endfor %}
+                        
+                        {% if not medicamentos %}
+                        <tr>
+                            <td colspan="2" class="meds-empty">
+                                <i class="fas fa-info-circle meds-empty-icon"></i>
+                                No hay medicamentos registrados en la base de datos.
+                            </td>
+                        </tr>
+                        {% endif %}
                     </tbody>
                 </table>
             </div>
         </div>
+
     </div>
 </div>
-
-</body>
-</html>
+{% endblock %}

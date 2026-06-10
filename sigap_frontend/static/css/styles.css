@@ -1,27 +1,86 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&family=Raleway:wght@600;700;800&display=swap');
 
+/* ==========================================================================
+   01. PALETA DE COLORES DINÁMICA (MODO CLARO POR DEFECTO)
+   ========================================================================== */
 :root {
+    /* Colores base invariables */
     --azul-oscuro: #1a3a6e;
     --azul-medio: #2a5298;
     --azul-claro: #4a90d9;
     --azul-sidebar: #1e4db7;
+    --sidebar-w: 220px;
+
+    /* Variables mutables (Cambian en Modo Oscuro) */
     --gris-fondo: #eef1f7;
     --blanco: #ffffff;
     --texto: #2d3142;
     --texto-suave: #6b7280;
     --borde: #dde3f0;
-    --sidebar-w: 220px;
+    --topbar-bg: #ffffff;
+    --panel-paciente-bg: #ffffff;
+    --tabs-bg: #ffffff;
+    --tarjeta-bg: #ffffff;
+    --input-bg: #ffffff;
+    
+    --sidebar-gradient: linear-gradient(180deg, #1a3a6e 0%, #1e4db7 60%, #2a5298 100%);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* ==========================================================================
+   02. PALETA DE COLORES (MODO OSCURO)
+   ========================================================================== */
+body.dark-mode {
+    --gris-fondo: #0f172a;        
+    --blanco: #1e293b;            
+    --texto: #f8fafc;             
+    --texto-suave: #94a3b8;       
+    --borde: #334155;             
+    --topbar-bg: #1e293b;         
+    --panel-paciente-bg: #111827; 
+    --tabs-bg: #1e293b;           
+    --tarjeta-bg: #1e293b;        
+    --input-bg: #334155;          
+    
+    --sidebar-gradient: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+}
+
+/* ==========================================================================
+   03. ESTILOS GENERALES Y REPOSITORIO BASE
+   ========================================================================== */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
 
 body {
     font-family: 'Nunito', sans-serif;
     background: var(--gris-fondo);
     color: var(--texto);
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* ===== LOGIN ===== */
+.page-body { 
+    flex: 1; 
+    overflow-y: auto; 
+}
+
+/* Alineaciones y utilidades */
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+.text-highlight {
+    font-size: 0.9rem;
+    color: var(--azul-claro);
+    font-weight: 700;
+}
+body.dark-mode .text-highlight {
+    color: #7eb8f7;
+}
+
+/* ==========================================================================
+   04. VISTA DE AUTENTICACIÓN (LOGIN)
+   ========================================================================== */
 body.login-page {
     background: var(--gris-fondo);
     min-height: 100vh;
@@ -37,7 +96,10 @@ body.login-page {
     gap: 14px;
 }
 
-.login-topbar .logo-icon { font-size: 2rem; }
+.login-topbar .logo-icon { 
+    font-size: 2rem; 
+}
+
 .login-topbar .logo-title {
     font-family: 'Raleway', sans-serif;
     font-weight: 800;
@@ -46,6 +108,7 @@ body.login-page {
     letter-spacing: 2px;
     display: block;
 }
+
 .login-topbar .logo-sub {
     color: rgba(255,255,255,0.7);
     font-size: 0.72rem;
@@ -79,7 +142,10 @@ body.login-page {
     margin-bottom: 28px;
 }
 
-.login-logo-icon { font-size: 2.4rem; }
+.login-logo-icon { 
+    font-size: 2.4rem; 
+}
+
 .login-logo-title {
     font-family: 'Raleway', sans-serif;
     font-weight: 800;
@@ -87,6 +153,7 @@ body.login-page {
     font-size: 1.3rem;
     letter-spacing: 2px;
 }
+
 .login-logo-sub {
     font-size: 0.7rem;
     color: rgba(255,255,255,0.7);
@@ -103,20 +170,30 @@ body.login-page {
 
 .login-input {
     border: 1px solid var(--borde);
+    background-color: var(--input-bg);
+    color: var(--texto);
     border-radius: 8px;
     padding: 10px 14px;
     font-family: 'Nunito', sans-serif;
     width: 100%;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, background-color 0.2s;
 }
+
 .login-input:focus {
     outline: none;
     border-color: var(--azul-claro);
     box-shadow: 0 0 0 3px rgba(74,144,217,0.15);
 }
 
-.forgot-link { color: var(--azul-claro); font-size: 0.85rem; text-decoration: none; }
-.forgot-link:hover { text-decoration: underline; }
+.forgot-link { 
+    color: var(--azul-claro); 
+    font-size: 0.85rem; 
+    text-decoration: none; 
+}
+
+.forgot-link:hover { 
+    text-decoration: underline; 
+}
 
 .btn-login {
     background: var(--azul-medio);
@@ -129,18 +206,33 @@ body.login-page {
     cursor: pointer;
     transition: background 0.2s;
 }
-.btn-login:hover { background: var(--azul-oscuro); }
 
-/* ===== APP LAYOUT ===== */
+.btn-login:hover { 
+    background: var(--azul-oscuro); 
+}
+
+/* ==========================================================================
+   05. ESTRUCTURA DE LA APLICACIÓN (LAYOUT BASE)
+   ========================================================================== */
 .app-wrapper {
     display: flex;
     min-height: 100vh;
 }
 
-/* ===== SIDEBAR ===== */
+.main-content {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ==========================================================================
+   06. BARRA LATERAL DE NAVEGACIÓN (SIDEBAR)
+   ========================================================================== */
 .sidebar {
     width: var(--sidebar-w);
-    background: linear-gradient(180deg, #1a3a6e 0%, #1e4db7 60%, #2a5298 100%);
+    background: var(--sidebar-gradient);
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -148,6 +240,7 @@ body.login-page {
     height: 100vh;
     z-index: 100;
     box-shadow: 3px 0 15px rgba(0,0,0,0.2);
+    transition: background 0.3s ease;
 }
 
 .sidebar-logo {
@@ -158,7 +251,10 @@ body.login-page {
     border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-.sidebar-logo .logo-icon { font-size: 2rem; }
+.sidebar-logo .logo-icon { 
+    font-size: 2rem; 
+}
+
 .sidebar-logo .logo-title {
     font-family: 'Raleway', sans-serif;
     font-weight: 800;
@@ -167,6 +263,7 @@ body.login-page {
     letter-spacing: 2px;
     display: block;
 }
+
 .sidebar-logo .logo-sub {
     color: rgba(255,255,255,0.6);
     font-size: 0.65rem;
@@ -203,32 +300,77 @@ body.login-page {
     border-left-color: #7eb8f7;
 }
 
-.nav-item i { width: 20px; text-align: center; font-size: 1rem; }
+.nav-item i { 
+    width: 20px; 
+    text-align: center; 
+    font-size: 1rem; 
+}
 
 .sidebar-footer {
     border-top: 1px solid rgba(255,255,255,0.1);
     padding: 8px 0;
 }
 
-/* ===== MAIN CONTENT ===== */
-.main-content {
-    margin-left: var(--sidebar-w);
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-/* ===== TOPBAR ===== */
+/* ==========================================================================
+   07. BARRA SUPERIOR DE LA APP (TOPBAR)
+   ========================================================================== */
 .topbar {
-    background: white;
+    background: var(--topbar-bg);
     border-bottom: 1px solid var(--borde);
-    padding: 12px 24px;
+    padding: 10px 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    width: 100%;
     box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.topbar-btn-util {
+    background-color: var(--gris-fondo);
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    color: var(--texto);
+    font-weight: 600;
+    font-size: 0.88rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.topbar-btn-util:hover {
+    background-color: var(--borde);
+}
+
+.topbar-btn-util i {
+    color: var(--texto-suave);
+    transition: color 0.2s;
+}
+
+.topbar-btn-util:hover i {
+    color: var(--texto);
+}
+
+.topbar-btn-envelope {
+    background-color: var(--gris-fondo);
+    border: none;
+    border-radius: 8px;
+    width: 38px;
+    height: 38px;
+    color: var(--texto-suave);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.topbar-btn-envelope:hover {
+    background-color: var(--borde);
+    color: var(--texto);
 }
 
 .topbar-search {
@@ -241,9 +383,13 @@ body.login-page {
     gap: 10px;
     flex: 1;
     max-width: 380px;
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
-.topbar-search i { color: var(--texto-suave); }
+.topbar-search i { 
+    color: var(--texto-suave); 
+}
+
 .topbar-search input {
     border: none;
     background: transparent;
@@ -273,10 +419,16 @@ body.login-page {
     font-weight: 600;
     color: var(--texto);
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
 }
-.topbar-btn:hover { background: #dde3f0; }
-.topbar-btn.icon-only { padding: 8px 12px; }
+
+.topbar-btn:hover { 
+    background: var(--borde); 
+}
+
+.topbar-btn.icon-only { 
+    padding: 8px 12px; 
+}
 
 .topbar-user {
     display: flex;
@@ -297,26 +449,186 @@ body.login-page {
     font-size: 1rem;
 }
 
-.user-name { font-weight: 700; font-size: 0.85rem; display: block; }
-.user-role { font-size: 0.75rem; color: var(--texto-suave); display: block; }
+.user-name { 
+    font-weight: 700; 
+    font-size: 0.85rem; 
+    display: block; 
+    color: var(--texto); 
+}
 
-/* ===== PAGE BODY ===== */
-.page-body { flex: 1; overflow-y: auto; }
+.user-role { 
+    font-size: 0.75rem; 
+    color: var(--texto-suave); 
+    display: block; 
+}
 
-/* ===== HISTORIAL LAYOUT ===== */
+/* ==========================================================================
+   08. COMPONENTE: TABLAS DE DATOS PERSONALIZADAS
+   ========================================================================== */
+.table-container {
+    overflow-x: auto;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    background-color: var(--tarjeta-bg);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.88rem;
+}
+
+.custom-table thead tr {
+    background: var(--gris-fondo);
+    border-bottom: 1px solid var(--borde);
+}
+
+.custom-table th {
+    padding: 12px 16px;
+    font-weight: 700;
+    color: var(--texto);
+}
+
+.custom-table tbody tr {
+    border-bottom: 1px solid var(--borde);
+    background-color: var(--tarjeta-bg);
+    transition: background-color 0.2s ease;
+}
+
+.custom-table tbody tr:hover {
+    background-color: var(--gris-fondo);
+}
+
+.custom-table td {
+    padding: 14px 16px;
+    vertical-align: middle;
+}
+
+.custom-table td.td-id {
+    font-weight: 700;
+    color: var(--texto-suave);
+}
+
+.custom-table td.td-name {
+    font-weight: 700;
+    color: var(--texto);
+}
+
+.custom-table td.td-muted {
+    color: var(--texto-suave);
+}
+
+.custom-table td.td-diagnostico {
+    font-weight: 600;
+    color: var(--texto);
+}
+
+/* Badges de Estado Inteligentes en Tablas */
+.badge-status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    display: inline-block;
+    font-size: 0.8rem;
+    border: 1px solid transparent;
+}
+
+.status-hospitalizado {
+    background-color: #e0f2fe;
+    color: #0369a1;
+    border-color: #cfe2ff;
+}
+
+.status-alta {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    border-color: #a3cfbb;
+}
+
+.status-default {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    border-color: #e2e3e5;
+}
+
+body.dark-mode .status-hospitalizado {
+    background-color: #0369a1;
+    color: #e0f2fe;
+    border-color: #0284c7;
+}
+
+body.dark-mode .status-alta {
+    background-color: #0f5132;
+    color: #d1e7dd;
+    border-color: #157347;
+}
+
+body.dark-mode .status-default {
+    background-color: #334155;
+    color: #f8fafc;
+    border-color: #475569;
+}
+
+/* Botón de Acción en Fila (Ver Historial) */
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--gris-fondo);
+    border-radius: 6px;
+    padding: 6px 10px;
+    color: var(--azul-claro);
+    text-decoration: none;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.btn-action:hover {
+    background-color: var(--borde);
+    color: var(--azul-medio);
+}
+
+.table-empty {
+    padding: 40px !important;
+    text-align: center;
+    color: var(--texto-suave);
+}
+
+.table-empty-icon {
+    font-size: 2rem;
+    color: var(--borde);
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* ==========================================================================
+   09. VISTA INTERNA: PANEL DE HISTORIAL CLÍNICO Y MÓDULO PACIENTES
+   ========================================================================== */
 .historial-layout {
     display: flex;
     gap: 0;
     height: calc(100vh - 61px);
 }
 
+.patients-container {
+    background-color: var(--panel-paciente-bg);
+    padding: 24px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: background-color 0.3s ease;
+}
+
 .patient-panel {
     width: 240px;
     min-width: 240px;
-    background: white;
+    background: var(--panel-paciente-bg);
     border-right: 1px solid var(--borde);
     padding: 20px 16px;
     overflow-y: auto;
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .patient-avatar-wrap {
@@ -335,6 +647,7 @@ body.login-page {
     justify-content: center;
     font-size: 3rem;
     color: var(--azul-claro);
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .patient-info h5 {
@@ -352,7 +665,9 @@ body.login-page {
     margin-bottom: 4px;
 }
 
-.patient-info strong { color: var(--texto); }
+.patient-info strong { 
+    color: var(--texto); 
+}
 
 .badge-estado {
     background: #e0f2fe;
@@ -361,6 +676,11 @@ body.login-page {
     border-radius: 20px;
     font-size: 0.75rem;
     font-weight: 700;
+}
+
+body.dark-mode .badge-estado {
+    background: #0369a1;
+    color: #e0f2fe;
 }
 
 .info-label {
@@ -386,12 +706,72 @@ body.login-page {
     overflow: hidden;
 }
 
+/* Formulario e inputs de filtros de búsqueda */
+.search-filter-form {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 8px;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.search-input-container {
+    margin-left: 0 !important;
+    max-width: 320px;
+    width: 100%;
+}
+
+.form-actions {
+    display: flex;
+    align-items: center;
+}
+
+.btn-clear {
+    text-decoration: none;
+    font-size: 0.85rem;
+    margin-right: 8px;
+    padding: 8px 14px;
+    background-color: var(--gris-fondo);
+    color: var(--texto-suave);
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.btn-clear:hover {
+    background-color: var(--borde);
+    color: var(--texto);
+}
+
+.btn-filter {
+    background: var(--azul-medio);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-filter:hover { background: var(--azul-oscuro); }
+.btn-filter:active { transform: scale(0.98); }
+
+/* Pestañas (Tabs) */
 .historial-tabs {
     display: flex;
     gap: 0;
     border-bottom: 1px solid var(--borde);
-    background: white;
+    background: var(--tabs-bg);
     padding: 0 20px;
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .htab {
@@ -413,6 +793,12 @@ body.login-page {
     border-bottom-color: var(--azul-medio);
 }
 
+body.dark-mode .htab.active {
+    color: var(--azul-claro);
+    border-bottom-color: var(--azul-claro);
+}
+
+/* Tarjetas y Entradas Clínicas */
 .historial-entries {
     flex: 1;
     overflow-y: auto;
@@ -423,10 +809,11 @@ body.login-page {
 }
 
 .entry-card {
-    background: white;
+    background: var(--tarjeta-bg);
     border: 1px solid var(--borde);
     border-radius: 10px;
     padding: 14px 16px;
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .entry-header {
@@ -483,9 +870,12 @@ body.login-page {
     margin-top: 8px;
     cursor: pointer;
     color: var(--texto);
+    transition: background 0.2s, border-color 0.2s;
 }
 
-.entry-file:hover { background: #dde3f0; }
+.entry-file:hover { 
+    background: var(--borde); 
+}
 
 .new-entry {
     background: var(--gris-fondo);
@@ -498,8 +888,884 @@ body.login-page {
     background: transparent;
     font-family: 'Nunito', sans-serif;
     font-size: 0.88rem;
-    color: var(--texto-suave);
+    color: var(--texto);
     resize: none;
     min-height: 70px;
     outline: none;
 }
+
+.new-entry textarea::placeholder {
+    color: var(--texto-suave);
+}
+/* ==========================================================================
+   10. MÓDULO: EVALUACIONES PSIQUIÁTRICAS Y MÉDICAS
+   ========================================================================== */
+.evals-container {
+    padding: 24px;
+    background: var(--tarjeta-bg);
+    border-radius: 12px;
+    border: 1px solid var(--borde);
+    margin: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Encabezado */
+.evals-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 16px;
+}
+
+@media (max-width: 576px) {
+    .evals-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .btn-evals-primary {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+.evals-title-area h2 {
+    color: var(--texto);
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+}
+
+.evals-title-area p {
+    color: var(--texto-suave);
+    margin-top: 4px;
+    font-size: 0.95rem;
+}
+
+.icon-blue {
+    color: #2563eb;
+}
+body.dark-mode .icon-blue {
+    color: #4a90d9; /* Tono azul más suave e iluminado para fondos oscuros */
+}
+
+/* Botón Principal */
+.btn-evals-primary {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-evals-primary:hover {
+    background: #1d4ed8;
+}
+
+.btn-evals-primary:active {
+    transform: scale(0.98);
+}
+
+/* Contenedor de Estado Vacío */
+.evals-empty-card {
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    color: var(--texto-suave);
+    background-color: var(--gris-fondo);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.evals-empty-icon {
+    font-size: 2.5rem;
+    color: var(--borde);
+    margin-bottom: 12px;
+    display: block;
+}
+/* ==========================================================================
+   11. MÓDULO: FARMACIA E INVENTARIO DE MEDICAMENTOS
+   ========================================================================== */
+.meds-container {
+    padding: 24px;
+    background-color: var(--panel-paciente-bg);
+    min-height: 100vh;
+    transition: background-color 0.3s ease;
+}
+
+.meds-header h2 {
+    color: var(--texto);
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+}
+
+.meds-header p {
+    color: var(--texto-suave);
+    margin-top: 4px;
+    font-size: 0.95rem;
+}
+
+.icon-green { color: #10b981; }
+.icon-muted { color: var(--texto-suave); }
+
+/* Alertas de Confirmación (Flash) */
+.flash-alert-success {
+    padding: 12px 16px;
+    background-color: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #065f46;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+body.dark-mode .flash-alert-success {
+    background-color: #065f46;
+    border-color: #047857;
+    color: #ecfdf5;
+}
+
+/* Cuadrícula de Contenidos */
+.meds-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 24px;
+    align-items: start;
+}
+
+@media (max-width: 768px) {
+    .meds-grid { grid-template-columns: 1fr; }
+}
+
+/* Tarjetas de Farmacia */
+.meds-card {
+    background: var(--tarjeta-bg);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--borde);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.meds-card h3 {
+    font-size: 1.1rem;
+    color: var(--texto);
+    margin-bottom: 16px;
+    font-weight: 700;
+    border-bottom: 1px solid var(--borde);
+    padding-bottom: 8px;
+}
+
+.meds-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: var(--texto-suave);
+    font-size: 0.85rem;
+}
+
+.meds-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--borde);
+    background-color: var(--input-bg);
+    color: var(--texto);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.meds-input:focus {
+    border-color: var(--azul-claro);
+    box-shadow: 0 0 0 3px rgba(74,144,217,0.15);
+}
+
+.btn-meds-submit {
+    background: #10b981;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-meds-submit:hover { background: #059669; }
+.btn-meds-submit:active { transform: scale(0.98); }
+
+/* Tabla de Existencias Específica */
+.meds-table-scroll {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.meds-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.meds-table thead tr {
+    background: var(--gris-fondo);
+    border-bottom: 2px solid var(--borde);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.meds-table th {
+    padding: 12px;
+    color: var(--texto-suave);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.meds-table tbody tr {
+    border-bottom: 1px solid var(--borde);
+    transition: background-color 0.15s ease;
+}
+
+.meds-table tbody tr:hover {
+    background-color: var(--gris-fondo);
+}
+
+.meds-table td {
+    padding: 12px;
+    vertical-align: middle;
+}
+
+.med-name {
+    font-weight: 600;
+    color: var(--texto);
+    font-size: 0.95rem;
+}
+
+/* Badges Dinámicos de Niveles de Stock */
+.badge-stock {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: inline-block;
+}
+
+.stock-high { background-color: #d1fae5; color: #065f46; }
+.stock-low  { background-color: #fee2e2; color: #991b1b; }
+
+body.dark-mode .stock-high { background-color: #065f46; color: #d1fae5; }
+body.dark-mode .stock-low  { background-color: #991b1b; color: #fee2e2; }
+
+.meds-empty {
+    padding: 30px !important;
+    text-align: center;
+    color: var(--texto-suave);
+    font-size: 0.9rem;
+}
+
+.meds-empty-icon {
+    display: block;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+}
+/* ==========================================================================
+   12. MÓDULO: CONTROL DE INTERNAMIENTOS
+   ========================================================================== */
+.intern-container {
+    padding: 24px;
+    background: var(--tarjeta-bg);
+    border-radius: 12px;
+    border: 1px solid var(--borde);
+    margin: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Encabezado */
+.intern-title-area h2 {
+    color: var(--texto);
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+}
+
+.intern-title-area p {
+    color: var(--texto-suave);
+    margin-top: 4px;
+    font-size: 0.95rem;
+}
+
+/* Icono Principal (Color Teal/Cian Médico) */
+.icon-teal {
+    color: #0d9488; /* Verde azulado médico, transmite calma y clínica */
+    transition: color 0.3s ease;
+}
+body.dark-mode .icon-teal {
+    color: #2dd4bf; /* Tono más brillante y sutil para el modo oscuro */
+}
+
+/* Botón de Ingreso (Color de acción médica fuerte) */
+.btn-intern-primary {
+    background: #0d9488;
+    color: white !important;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 4px rgba(13, 148, 136, 0.2);
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-intern-primary:hover {
+    background: #0f766e;
+    box-shadow: 0 4px 6px rgba(15, 118, 110, 0.3);
+}
+
+.btn-intern-primary:active {
+    transform: scale(0.98);
+}
+
+/* Rejilla de Indicadores (Stats) */
+.intern-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.stat-card {
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--borde);
+    transition: all 0.3s ease;
+}
+
+.stat-card h3 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+/* VARIACIONES DE COLOR PARA LAS TARJETAS (Modo Claro vs Modo Oscuro) */
+
+/* 1. Camas Ocupadas (Enfoque Informativo / Azul) */
+.card-occupied {
+    background-color: #f0fdfa;
+    color: #115e59;
+    border-color: #99f6e4;
+}
+body.dark-mode .card-occupied {
+    background-color: rgba(13, 148, 136, 0.15);
+    color: #2dd4bf;
+    border-color: rgba(45, 212, 191, 0.3);
+}
+
+/* 2. Camas Disponibles (Enfoque Positivo / Verde) */
+.card-available {
+    background-color: #f0fdf4;
+    color: #166534;
+    border-color: #bbf7d0;
+}
+body.dark-mode .card-available {
+    background-color: rgba(22, 163, 74, 0.15);
+    color: #4ade80;
+    border-color: rgba(74, 222, 128, 0.3);
+}
+
+/* 3. En Observación o Alerta (Enfoque Atención / Naranja) */
+.card-alert {
+    background-color: #fff7ed;
+    color: #9a3412;
+    border-color: #ffedd5;
+}
+body.dark-mode .card-alert {
+    background-color: rgba(234, 88, 12, 0.15);
+    color: #fb923c;
+    border-color: rgba(251, 146, 60, 0.3);
+}
+/* ==========================================================================
+   13. MÓDULO: CONTROL DE VISITAS
+   ========================================================================== */
+.visits-container {
+    padding: 24px;
+    background: var(--tarjeta-bg);
+    border-radius: 12px;
+    border: 1px solid var(--borde);
+    margin: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Encabezado */
+.visits-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 16px;
+}
+
+@media (max-width: 576px) {
+    .visits-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .btn-visits-primary {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+.visits-title-area h2 {
+    color: var(--texto);
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+}
+
+.visits-title-area p {
+    color: var(--texto-suave);
+    margin-top: 4px;
+    font-size: 0.95rem;
+}
+
+/* Icono Principal (Color Púrpura de Soporte Social) */
+.icon-purple {
+    color: #7c3aed; /* Púrpura vivo en modo claro */
+    transition: color 0.3s ease;
+}
+body.dark-mode .icon-purple {
+    color: #a78bfa; /* Púrpura pastel/lavanda en modo oscuro */
+}
+
+/* Botón de Registro */
+.btn-visits-primary {
+    background: #7c3aed;
+    color: white !important;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 4px rgba(124, 58, 237, 0.2);
+    transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+}
+
+.btn-visits-primary:hover {
+    background: #6d28d9;
+    box-shadow: 0 4px 6px rgba(109, 40, 217, 0.3);
+}
+
+.btn-visits-primary:active {
+    transform: scale(0.98);
+}
+
+/* Rejilla de Indicadores de Visita */
+.visits-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.vstat-card {
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--borde);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.vstat-info h3 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--texto-suave);
+}
+
+.vstat-number {
+    font-size: 2.2rem;
+    font-weight: 800;
+}
+
+/* Iconos gigantes de fondo sutiles */
+.vstat-bg-icon {
+    font-size: 3rem;
+    position: absolute;
+    right: -10px;
+    bottom: -5px;
+    opacity: 0.1;
+    transform: rotate(-15deg);
+    transition: opacity 0.3s ease;
+}
+
+/* Variación 1: Visitas actualmente dentro de la clínica (Enfoque Alerta/Atención) */
+.card-active-visits {
+    background-color: #faf5ff;
+    border-color: #e9d5ff;
+}
+.card-active-visits .vstat-number, 
+.card-active-visits .vstat-bg-icon {
+    color: #6b21a8;
+}
+
+body.dark-mode .card-active-visits {
+    background-color: rgba(124, 58, 237, 0.1);
+    border-color: rgba(167, 139, 250, 0.2);
+}
+body.dark-mode .card-active-visits .vstat-number {
+    color: #c084fc;
+}
+
+/* Variación 2: Histórico/Total del día (Neutral) */
+.card-total-today {
+    background-color: var(--gris-fondo);
+    border-color: var(--borde);
+}
+.card-total-today .vstat-number, 
+.card-total-today .vstat-bg-icon {
+    color: var(--texto);
+}
+/* ==========================================================================
+   14. MÓDULO: MATRIZ DE PERMISOS Y SEGURIDAD
+   ========================================================================== */
+.perm-container {
+    padding: 24px;
+    background: var(--tarjeta-bg);
+    border-radius: 12px;
+    border: 1px solid var(--borde);
+    margin: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Encabezado */
+.perm-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 16px;
+}
+
+@media (max-width: 576px) {
+    .perm-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .btn-perm-primary {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+.perm-title-area h2 {
+    color: var(--texto);
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+}
+
+.perm-title-area p {
+    color: var(--texto-suave);
+    margin-top: 4px;
+    font-size: 0.95rem;
+}
+
+/* Icono Principal (Color Índigo Tecnológico) */
+.icon-indigo {
+    color: #4f46e5; /* Índigo corporativo en modo claro */
+    transition: color 0.3s ease;
+}
+body.dark-mode .icon-indigo {
+    color: #818cf8; /* Índigo iluminado/lavanda en modo oscuro */
+}
+
+/* Botón Guardar Cambios (Índigo de Acción Segura) */
+.btn-perm-primary {
+    background: #4f46e5;
+    color: white !important;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
+    transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+}
+
+.btn-perm-primary:hover {
+    background: #4338ca;
+    box-shadow: 0 4px 6px rgba(67, 56, 202, 0.3);
+}
+
+.btn-perm-primary:active {
+    transform: scale(0.98);
+}
+
+/* Banner de Advertencia de Seguridad */
+.perm-alert-banner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    background-color: #fffbeb; /* Ámbar muy suave */
+    border: 1px solid #fef3c7;
+    border-radius: 8px;
+    color: #b45309; /* Texto marrón/ámbar oscuro */
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+    transition: all 0.3s ease;
+}
+
+.perm-alert-banner i {
+    font-size: 1.2rem;
+    color: #d97706; /* Icono de peligro en color naranja/ámbar */
+    flex-shrink: 0;
+}
+
+/* Adaptación del Banner a Modo Oscuro */
+body.dark-mode .perm-alert-banner {
+    background-color: rgba(217, 119, 6, 0.1); /* Fondo ámbar traslúcido oscuro */
+    border: 1px solid rgba(217, 119, 6, 0.25);
+    color: #fcd34d; /* Texto amarillo suave legible */
+}
+
+body.dark-mode .perm-alert-banner i {
+    color: #fbbf24;
+}
+/* ==========================================================================
+   15. MÓDULO: GESTIÓN DE USUARIOS
+   ========================================================================== */
+.users-container {
+    padding: 24px;
+    background: var(--tarjeta-bg);
+    border-radius: 12px;
+    border: 1px solid var(--borde);
+    margin: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.users-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 16px;
+}
+
+.users-title-area h2 {
+    color: var(--texto);
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+}
+
+.users-title-area p {
+    color: var(--texto-suave);
+    margin-top: 4px;
+    font-size: 0.95rem;
+}
+
+.btn-users-primary {
+    background: #2563eb;
+    color: white !important;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-users-primary:hover {
+    background: #1d4ed8;
+}
+
+/* Barra de búsqueda interna */
+.users-search-bar {
+    position: relative;
+    margin-bottom: 20px;
+    max-width: 450px;
+}
+
+.users-search-bar input {
+    width: 100%;
+    padding: 10px 16px 10px 40px;
+    border-radius: 8px;
+    border: 1px solid var(--borde);
+    background-color: var(--gris-fondo);
+    color: var(--texto);
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.users-search-bar input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.users-search-bar .search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--texto-suave);
+    font-size: 0.95rem;
+}
+
+
+/* ==========================================================================
+   16. MÓDULO: BITÁCORA DE AUDITORÍA (LOGS)
+   ========================================================================== */
+.audit-container {
+    padding: 24px;
+    background: var(--tarjeta-bg);
+    border-radius: 12px;
+    border: 1px solid var(--borde);
+    margin: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.audit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 16px;
+}
+
+.audit-title-area h2 {
+    color: var(--texto);
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+}
+
+.audit-title-area p {
+    color: var(--texto-suave);
+    margin-top: 4px;
+    font-size: 0.95rem;
+}
+
+/* Icono de Carbón / Técnico */
+.icon-carbon {
+    color: #475569;
+}
+body.dark-mode .icon-carbon {
+    color: #94a3b8;
+}
+
+/* Botón de exportación (Estilo secundario/neutral mas sobrio) */
+.btn-audit-secondary {
+    background: var(--gris-fondo);
+    color: var(--texto) !important;
+    border: 1px solid var(--borde);
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.btn-audit-secondary:hover {
+    background-color: var(--borde);
+}
+
+/* Franja de Resumen Superior */
+.audit-summary-strip {
+    display: flex;
+    gap: 24px;
+    padding: 12px 16px;
+    background-color: var(--gris-fondo);
+    border-radius: 8px;
+    border: 1px solid var(--borde);
+    margin-bottom: 24px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--texto);
+}
+
+.strip-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.text-blue { color: #2563eb; }
+.text-orange { color: #ea580c; }
+body.dark-mode .text-blue { color: #60a5fa; }
+body.dark-mode .text-orange { color: #fb923c; }

@@ -22,7 +22,7 @@
             <p class="info-value">{{ total_hospitalizados }} activos</p>
 
             <p class="info-label">ÚLTIMO INGRESO</p>
-            <p class="info-value" style="font-size: 0.9rem; color: var(--azul-medio); font-weight: 700;">
+            <p class="info-value text-highlight">
                 {{ ultimo_ingreso }}
             </p>
         </div>
@@ -36,63 +36,65 @@
             <button class="htab">De Alta</button>
         </div>
 
-        <div class="historial-entries" style="background: #ffffff;">
+        <div class="patients-container">
             
-            <form method="GET" action="{{ url_for('pacientes') }}" style="display: flex; gap: 12px; margin-bottom: 8px; align-items: center; justify-content: space-between; width: 100%;">
-                <div class="topbar-search" style="margin-left: 0; max-width: 320px; width: 100%;">
+            <form method="GET" action="{{ url_for('pacientes') }}" class="search-filter-form">
+                <div class="topbar-search search-input-container">
                     <i class="fas fa-search"></i>
                     <input type="text" name="q" placeholder="Buscar por nombre o documento..." value="{{ search_query }}">
                 </div>
-                <div>
+                <div class="form-actions">
                     {% if search_query %}
-                        <a href="{{ url_for('pacientes') }}" class="btn btn-secondary" style="text-decoration: none; font-size: 0.85rem; margin-right: 8px;">Limpiar</a>
+                        <a href="{{ url_for('pacientes') }}" class="btn-clear">Limpiar</a>
                     {% endif %}
-                    <button type="submit" class="topbar-btn" style="background: var(--azul-medio); color: white; border: none; cursor: pointer;">
+                    <button type="submit" class="btn-filter">
                         <i class="fas fa-filter"></i> Filtrar
                     </button>
                 </div>
             </form>
 
-            <div style="overflow-x: auto; border: 1px solid var(--borde); border-radius: 10px;">
-                <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem;">
+            <div class="table-container">
+                <table class="custom-table">
                     <thead>
-                        <tr style="background: var(--gris-fondo); border-bottom: 1px solid var(--borde);">
-                            <th style="padding: 12px 16px; font-weight: 700; color: var(--texto);">ID</th>
-                            <th style="padding: 12px 16px; font-weight: 700; color: var(--texto);">Nombre Completo</th>
-                            <th style="padding: 12px 16px; font-weight: 700; color: var(--texto);">Edad / Género</th>
-                            <th style="padding: 12px 16px; font-weight: 700; color: var(--texto);">Estado</th>
-                            <th style="padding: 12px 16px; font-weight: 700; color: var(--texto);">Diagnóstico</th>
-                            <th style="padding: 12px 16px; font-weight: 700; color: var(--texto); text-align: center;">Acciones</th>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre Completo</th>
+                            <th>Edad / Género</th>
+                            <th>Estado</th>
+                            <th>Diagnóstico</th>
+                            <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for p in pacientes %}
-                        <tr style="border-bottom: 1px solid var(--borde); transition: background 0.2s;">
-                            <td style="padding: 14px 16px; font-weight: 700; color: var(--texto-suave);">{{ p.id_paciente }}</td>
-                            <td style="padding: 14px 16px; font-weight: 700; color: var(--texto);">{{ p.nombre }}</td>
-                            <td style="padding: 14px 16px; color: var(--texto-suave);">{{ p.edad }} años / {{ p.genero }}</td>
-                            <td style="padding: 14px 16px;">
+                    {% for p in pacientes %}
+                        <tr>
+                            <td class="td-id">{{ p.id_paciente }}</td>
+                            <td class="td-name">{{ p.nombre }}</td>
+                            <td class="td-muted">{{ p.edad }} años / {{ p.genero }}</td>
+                            <td>
                                 {% if p.estado == 'Hospitalizado' %}
-                                    <span class="badge-estado">{{ p.estado }}</span>
+                                    <span class="badge-status status-hospitalizado">Hospitalizado</span>
+                                {% elif p.estado == 'Alta Médica' %}
+                                    <span class="badge-status status-alta">Alta Médica</span>
                                 {% else %}
-                                    <span class="badge-estado" style="background: #f0fdf4; color: #16a34a;">{{ p.estado }}</span>
+                                    <span class="badge-status status-default">{{ p.estado }}</span>
                                 {% endif %}
                             </td>
-                            <td style="padding: 14px 16px; font-weight: 600;">{{ p.diagnostico }}</td>
-                            <td style="padding: 14px 16px; text-align: center;">
-                                <a href="/historial/{{ p.id_paciente }}" class="topbar-btn icon-only" style="display: inline-flex; text-decoration: none;" title="Ver Historial">
-                                    <i class="fas fa-folder-open" style="color: var(--azul-medio);"></i>
+                            <td class="td-diagnostico">{{ p.diagnostico }}</td>
+                            <td class="text-center">
+                                <a href="/historial/{{ p.id_paciente }}" class="btn-action" title="Ver Historial">
+                                    <i class="fas fa-folder-open"></i>
                                 </a>
                             </td>
                         </tr>
-                        {% else %}
+                    {% else %}
                         <tr>
-                            <td colspan="6" style="padding: 30px; text-align: center; color: var(--texto-suave);">
-                                <i class="fas fa-excon-circle" style="margin-bottom: 8px; display: block; font-size: 1.5rem;"></i>
+                            <td colspan="6" class="table-empty">
+                                <i class="fas fa-search table-empty-icon"></i>
                                 No hay pacientes disponibles que coincidan con la búsqueda.
                             </td>
                         </tr>
-                        {% endfor %}
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
